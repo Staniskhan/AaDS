@@ -7,3 +7,5 @@
 *.txt
 !tasks_conditions.txt
 .vs/
+AaDS/
+x64/
