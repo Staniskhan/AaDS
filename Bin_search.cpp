@@ -46,7 +46,7 @@ int main() {
         int l = lower_bound(a, x);
         int r = upper_bound(a, x);
         int b = (l < n && a[l] == x) ? 1 : 0;
-        cout << b << " " << l << " " << r << "\n";
+        cout << b << ' ' << l << ' ' << r << '\n';
     }
 
     return 0;

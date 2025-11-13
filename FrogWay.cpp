@@ -19,7 +19,7 @@ int main()
 		cin >> mosquitoes;
 		cin >> mosquitoes;
 		sum += mosquitoes;
-		cout << sum << endl << 1 << ' ' << 3;
+		cout << sum << '\n' << 1 << ' ' << 3;
 		return 0;
 	}
 
@@ -47,7 +47,7 @@ int main()
 		way[i-2] = (memory[0] > memory[1]) ? (i - 2) : (i - 1);
 	}
 	
-	cout << memory[3] << endl;
+	cout << memory[3] << '\n';
 	int i = number_of_the_water_lily;
 	int *ans = new int[(number_of_the_water_lily - 1) / 2];
 	int j = 0;

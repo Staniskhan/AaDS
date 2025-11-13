@@ -34,44 +34,28 @@ void Add(std::vector<int>& tree, int inf, int sup, int index, int i, int x)
 	}
 }
 
-int FindSum(std::vector<int> tree, int inf, int sup, int index, int l, int r)
+long long FindSum(std::vector<int>& tree, int inf, int sup, int index, int l, int r)
 {
-	if (sup - inf == 1)
+	if (inf == l && sup == r)
 	{
 		return tree[index];
 	}
-	else if (l >= inf && l < (inf + sup) / 2 && r > (inf + sup) / 2 && r <= sup)
-	{
-		return FindSum(tree, inf, (inf + sup) / 2, 2 * index + 1, l, r) + FindSum(tree, (inf + sup) / 2, sup, 2 * index + 2, l, r);
-	}
-	else if (l >= inf && r <= (sup + inf) / 2)
+	if (r <= (inf + sup) / 2)
 	{
 		return FindSum(tree, inf, (inf + sup) / 2, 2 * index + 1, l, r);
 	}
-	else if (l >= (sup + inf) / 2 && r <= sup)
+	if (l >= (inf + sup) / 2)
 	{
 		return FindSum(tree, (inf + sup) / 2, sup, 2 * index + 2, l, r);
 	}
-	else if (l >= inf && l < (inf + sup) / 2 && r > sup)
-	{
-		return FindSum(tree, inf, (inf + sup) / 2, 2 * index + 1, l, r) + tree[2 * index + 2];
-	}
-	else if (l >= (inf + sup) / 2 && l < sup && r > sup)
-	{
-		return FindSum(tree, (inf + sup) / 2, sup, 2 * index + 2, l, r);
-	}
-	else if (r <= sup && r > (inf + sup) / 2 && l < inf)
-	{
-		return FindSum(tree, (inf + sup) / 2, sup, 2 * index + 2, l, r) + tree[2 * index + 1];
-	}
-	else if (r <= (inf + sup) / 2 && r > inf && l < inf)
-	{
-		return FindSum(tree, inf, (inf + sup) / 2, 2 * index + 1, l, r);
-	}	
+	return FindSum(tree, inf, (inf + sup) / 2, 2 * index + 1, l, (inf + sup) / 2) + FindSum(tree, (inf + sup) / 2, sup, 2 * index + 2, (inf + sup) / 2, r);
 }
 
 int main()
 {
+	std::ios_base::sync_with_stdio(false);
+	std::cin.tie(NULL);
+
 	int n;
 	std::cin >> n;
 	std::vector<int> arr(n);
@@ -96,7 +80,7 @@ int main()
 		{
 			int a, b;
 			std::cin >> a >> b;
-			std::cout << FindSum(tree, 0, n, 0, a, b);
+			std::cout << FindSum(tree, 0, n, 0, a, b) << '\n';
 		}
 		else if (request == "Add")
 		{

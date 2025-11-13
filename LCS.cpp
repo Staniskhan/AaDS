@@ -76,13 +76,13 @@ int main()
 
 	}
 
-	cout << memory[n][n] << endl;
+	cout << memory[n][n] << '\n';
 	cout << wayA[0];
 	for (i = 1; i < memory[n][n]; i++)
 	{
 		cout << ' ' << wayA[i];
 	}
-	cout << endl << wayB[0];
+	cout << '\n' << wayB[0];
 	for (i = 1; i < memory[n][n]; i++)
 	{
 		cout << ' ' << wayB[i];

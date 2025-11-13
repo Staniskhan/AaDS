@@ -29,7 +29,7 @@ int main()
 		answer += i;
 	}
 
-	cout << answer << "\n";
+	cout << answer << '\n';
 	ofstream out;
 	out.open("output.txt");
 	out << answer;

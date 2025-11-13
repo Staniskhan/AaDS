@@ -50,7 +50,7 @@ int main()
 			counter--;
 		}
 
-		out << counter << std::endl;
+		out << counter << '\n';
 	}
 	in.close();
 	out.close();
