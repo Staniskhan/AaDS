@@ -44,7 +44,7 @@ int main()
 
 	//заполнение рейсов
 	for (int i = 0; i < m; i++)
-	{
+	{	
 		std::string a;
 		std::string b;
 		in >> a >> b;

@@ -81,6 +81,10 @@ int main()
 					curr = curr->left;
 				}
 			}
+			else if (key == curr->key)
+			{
+				induk = false;
+			}
 		}
 	}
 	in.close();
