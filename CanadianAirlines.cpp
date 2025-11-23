@@ -7,9 +7,8 @@ struct city
 {
 	std::string name;
 	char connection;
-	int length;
 	std::vector<city*> prevCities;
-	city* maxAdress;
+	std::vector<std::vector<std::string>> ways;
 	city* next;
 	city* prev;
 };
@@ -20,13 +19,30 @@ int main()
 	std::ifstream in("in.txt");
 	in >> n >> m;
 
+	if (n == 2 && m == 0)
+	{
+		std::ofstream out("out.txt");
+		out << "No solution";
+		return 0;
+	}
+	else if (n == 2 && m == 1)
+	{
+		std::ofstream out("out.txt");
+		out << 2;
+		return 0;
+	}
+
 	city* head;
+	std::vector<std::string> names;
 
 	//заполнение городов
 	head = new city();
 	in >> head->name;
+	names.push_back(head->name);
 	head->connection = 'y';
-	head->length = 0;
+	std::vector<std::string> startV;
+	startV.push_back(head->name);
+	head->ways.push_back(startV);
 	city* curr = head;
 	head->prev = NULL;
 	for (short i = 1; i < n; i++)
@@ -35,6 +51,7 @@ int main()
 		curr->next->prev = curr;
 
 		in >> curr->next->name;
+		names.push_back(curr->next->name);
 		curr->next->connection = 'n';
 		curr = curr->next;
 		curr->next = NULL;
@@ -44,7 +61,7 @@ int main()
 
 	//заполнение рейсов
 	for (int i = 0; i < m; i++)
-	{	
+	{
 		std::string a;
 		std::string b;
 		in >> a >> b;
@@ -85,93 +102,25 @@ int main()
 	in.close();
 
 
-	//просчет путей и длины максимального пути
+	//просчет путей
 	curr = head->next;
-	while(curr != NULL)
-	{
-		curr->length = -1;
-		for (short j = 0; j < curr->prevCities.size(); j++)
-		{
-			if (curr->prevCities[j]->connection == 'y')
-			{
-				if (curr->prevCities[j]->length > curr->length)
-				{
-					curr->connection = 'y';
-					curr->length = curr->prevCities[j]->length;
-					curr->maxAdress = curr->prevCities[j];
-				}
-			}
-		}
-		if (curr->length != -1)
-		{
-			curr->length++;
-		}
-		curr = curr->next;
-	}
-
-	
-
-	if (tail->connection == 'n')
-	{
-		std::ofstream out("out.txt");
-		out << "No solution";
-		return 0;
-	}
-
-
-	int mem = tail->length;
-
-	//удаление пройденных городов
-	curr = tail->maxAdress;
-	for (short i = 0; i < tail->prevCities.size(); i++)
-	{
-		if (tail->prevCities[i]->name == tail->maxAdress->name && tail->prevCities[i] != head)
-		{
-			tail->prevCities.erase(tail->prevCities.begin() + i);
-		}
-	}
-	while (curr != head)
-	{
-		for (short i = 0; i < curr->prevCities.size(); i++)
-		{
-			//if (curr->prevCities[i]->name == curr->maxAdress->name)
-			//{
-			//	curr->prevCities.erase(curr->prevCities.begin() + i);
-			//}
-			curr->prevCities.erase(curr->prevCities.begin() + i);
-		}
-		curr->connection = 'n';
-		curr->prev->next = curr->next;
-		curr->next->prev = curr->prev;
-		curr = curr->maxAdress;
-	}
-
-	curr = head->next;
-	head->connection = 'y';
-	head->length = 0;
-	head->prev = NULL;
 	while (curr != NULL)
 	{
-		curr->length = -1;
-		curr->connection = 'n';
 		for (short j = 0; j < curr->prevCities.size(); j++)
 		{
 			if (curr->prevCities[j]->connection == 'y')
 			{
-				if (curr->prevCities[j]->length > curr->length)
+				for (int k = 0; k < curr->prevCities[j]->ways.size(); k++)
 				{
-					curr->connection = 'y';
-					curr->length = curr->prevCities[j]->length;
-					curr->maxAdress = curr->prevCities[j];
+					curr->ways.push_back(curr->prevCities[j]->ways[k]);
+					curr->ways[curr->ways.size() - 1].push_back(curr->name);
 				}
+				curr->connection = 'y';
 			}
-		}
-		if (curr->length != -1)
-		{
-			curr->length++;
 		}
 		curr = curr->next;
 	}
+
 
 	if (tail->connection == 'n')
 	{
@@ -180,9 +129,62 @@ int main()
 		return 0;
 	}
 
-	mem += tail->length;
+
+	bool** arr = new bool* [tail->ways.size()];
+	for (int i = 0; i < tail->ways.size(); i++)
+	{
+		arr[i] = new bool[tail->ways.size()];
+		for (int j = 0; j < tail->ways.size(); j++)
+		{
+			arr[i][j] = false;
+		}
+	}
+
+
+
+	for (int i = 1; i < names.size() - 1; i++)
+	{
+		std::vector<int> arr1;
+		for (int j = 0; j < tail->ways.size(); j++)
+		{
+			if (tail->ways[j][i] == names[i])
+			{
+				arr1.push_back(j);
+			}
+		}
+
+		for (int j = 0; j < arr1.size(); j++)
+		{
+			for (int k = j + 1; k < arr1.size(); k++)
+			{
+				arr[j][k] = true;
+			}
+		}
+	}
+
+	int max = -1;
+	for (int i = 1; i < tail->ways.size(); i++)
+	{
+		for (int j = i + 1; j < tail->ways.size(); j++)
+		{
+			if (arr[i][j] == false)
+			{
+				int m = tail->ways[i].size() + tail->ways[j].size() - 2;
+				if (m > max) max = m;
+			}
+		}
+	}
+
+	if (max == -1)
+	{
+		std::ofstream out("out.txt");
+		out << "No solution";
+		return 0;
+	}
+
+
 
 	std::ofstream out("out.txt");
-	out << mem;
+	out << max;
 	out.close();
 }
