@@ -28,14 +28,14 @@ int spacers(int n, int m)
 		return 1;
 	}
 	m = (m <= n - m) ? m : n - m;
-	int res = 1;
-	int res1 = 1;
+	long long res = 1;
+	long long res1 = 1;
 	for (int i = 1; i <= m; i++)
 	{
 		res = res * (n - m + i);
 		res1 = res1 * i;
 	}
-	return res / res1;
+	return (int)(res / res1);
 }
 
 
