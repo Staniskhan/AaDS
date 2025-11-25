@@ -2,7 +2,7 @@
 #include <vector>
 #include <string>
 
-void buildIntervalTree(std::vector<int>& arr, std::vector<int>& tree, int inf, int sup, int index)
+void buildIntervalTree(std::vector<long long>& arr, std::vector<long long>& tree, int inf, int sup, int index)
 {
 	if (sup - inf == 1)
 	{
@@ -16,7 +16,7 @@ void buildIntervalTree(std::vector<int>& arr, std::vector<int>& tree, int inf, i
 	}
 }
 
-void Add(std::vector<int>& tree, int inf, int sup, int index, int i, int x)
+void Add(std::vector<long long>& tree, int inf, int sup, int index, int i, long long x)
 {
 	if (sup - inf == 1)
 	{
@@ -34,7 +34,7 @@ void Add(std::vector<int>& tree, int inf, int sup, int index, int i, int x)
 	}
 }
 
-long long FindSum(std::vector<int>& tree, int inf, int sup, int index, int l, int r)
+long long FindSum(std::vector<long long>& tree, int inf, int sup, int index, int l, int r)
 {
 	if (inf == l && sup == r)
 	{
@@ -58,14 +58,14 @@ int main()
 
 	int n;
 	std::cin >> n;
-	std::vector<int> arr(n);
+	std::vector<long long> arr(n);
 
 	for (int i = 0; i < n; i++)
 	{
 		std::cin >> arr[i];
 	}
 
-	std::vector<int> tree(4 * n);
+	std::vector<long long> tree(4 * n);
 
 	buildIntervalTree(arr, tree, 0, n, 0);
 
