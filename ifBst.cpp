@@ -20,11 +20,12 @@ int main()
 	in >> n;
 
 	top* tree = new top[n];
-	
+
 	top root;
 	in >> root.key;
 	root.maxVal = NULL;
 	root.minVal = NULL;
+	tree[0] = root;
 
 	ofstream out;
 	out.open("bst.out");
@@ -45,7 +46,7 @@ int main()
 			curr.isRight = false;
 		}
 
-		
+
 
 		if (curr.isRight)
 		{
