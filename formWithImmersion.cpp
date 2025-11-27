@@ -8,15 +8,28 @@ int check(int** matr, int** indarr, int fromLine, int fromCol, int n, int m)
 		{
 			if (indarr[i - 1][j - 1] == 0 && matr[i][j] <= 0)
 			{
+				//int ind = 0;
 				if (matr[i][j + 1] <= 0 && indarr[i - 1][j] == 1)
 				{
 					//change indarr
 					//return -1
 				}
-				else if (matr[i][j + 1] <= 0 && indarr[i - 1][j] == 0)
+				else if (matr[i][j + 1] <= 0 && indarr[i - 1][j] == 0) // i - 1] does not exist !!!!!!!!!!!!!!!!
 				{
-					//cr(right)
+					//ind = cr(right)
+					//ind 
 				}
+				if (matr[i + 1][j] <= 0 && indarr[i][j - 1] == 1)
+				{
+					//change indarr
+					//return -1
+				}
+				else if (matr[i + 1][j] <= 0 && indarr[i][j - 1] == 0)
+				{
+					//ind = cl(right)
+					//ind 
+				}
+
 			}
 		}
 	}
