@@ -145,6 +145,7 @@ int main() {
 		{
 			parent->key = curr->key;
 			delete curr;
+			parent->left = NULL;
 		}
 		else
 		{
